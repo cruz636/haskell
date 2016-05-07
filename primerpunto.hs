@@ -5,11 +5,12 @@ sam = (CPersona "Sam" 100.0 42 [("inteligencia",55),("paciencia",50)])
 
 suerteSinAmuleto (CPersona _ _ s _) = s
 
-valorDeAmuleto (CPersona _ _ _ lista) =  snd (head (filter amuletoSi lista))
-amuletoSi elemento = fst (elemento) == "amuleto"
+valorDeElemento elemento (CPersona _ _ _ lista) =  snd (head (filter (amuletoSi elemento) lista))
+amuletoSi elemento elementos = fst (elementos) == elemento
 
-tieneAmuleto (CPersona _ _ _ lista) = any (=="amuleto") (concatMap (\ x -> [fst x]) lista)
+tieneElemento elemento (CPersona _ _ _ lista) = any (==elemento) (concatMap (\ x -> [fst x]) lista)
  
 suerteTotal persona 
-	|tieneAmuleto persona == True = (suerteSinAmuleto persona) * (valorDeAmuleto persona) 
+	|tieneElemento "amuleto" persona == True = (suerteSinAmuleto persona) * (valorDeElemento "amuleto" persona) 
 	| otherwise = suerteSinAmuleto persona
+
